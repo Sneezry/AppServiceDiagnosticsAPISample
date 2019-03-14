@@ -30,7 +30,7 @@ namespace SampleAPIServer.Services
             };
         }
 
-        public async Task<HttpResponseMessage> Execute(string resourceUrl, string region)
+        public async Task<HttpResponseMessage> Execute(string resourceUrl, string region, string requestId = null)
         {
             AuthenticationResult authResult = await this.tokenService.GetAccessTokenAsync();
 
@@ -39,6 +39,7 @@ namespace SampleAPIServer.Services
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue(authResult.AccessTokenType, authResult.AccessToken);
             requestMessage.Headers.Add("x-ms-path-query", resourceUrl);
             requestMessage.Headers.Add("x-ms-verb", "POST");
+            requestMessage.Headers.Add("x-ms-request-id", requestId ?? string.Empty);
             return await this.httpClient.SendAsync(requestMessage);
         }
     }

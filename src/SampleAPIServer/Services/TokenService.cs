@@ -14,15 +14,16 @@ namespace SampleAPIServer.Services
         private string appId;
         private string appKey;
         private string resource;
+        private AuthenticationContext authContext;
 
         public TokenService(IConfiguration configuration)
         {
             LoadConfigurations(configuration);
+            authContext = new AuthenticationContext(authority, true);
         }
 
         public async Task<AuthenticationResult> GetAccessTokenAsync()
         {
-            AuthenticationContext authContext = new AuthenticationContext(authority, true);
             AuthenticationResult authResult = null;
 
             try

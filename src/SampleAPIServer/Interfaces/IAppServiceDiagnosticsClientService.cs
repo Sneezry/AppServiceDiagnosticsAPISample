@@ -8,6 +8,6 @@ namespace SampleAPIServer.Interfaces
 {
     public interface IAppServiceDiagnosticsClientService
     {
-        Task<HttpResponseMessage> Execute(string resourceUrl, string region);
+        Task<HttpResponseMessage> Execute(string resourceUrl, string region, string requestId = null);
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SampleAPIServer.Helpers;
 using SampleAPIServer.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace SampleAPIServer.Controllers
 {
@@ -15,14 +11,16 @@ namespace SampleAPIServer.Controllers
     public class DiagnosticsController : Controller
     {
         private IAppServiceDiagnosticsClientService diagnosticsClient;
+        private CSMHelper csmHelper;
 
         public DiagnosticsController(IAppServiceDiagnosticsClientService diagnosticsClient)
         {
+            this.csmHelper = new CSMHelper();
             this.diagnosticsClient = diagnosticsClient;
         }
 
         [HttpGet(UriElements.ListDetectors)]
-        public async Task<HttpResponseMessage> ListDetectors(string subscriptionId, string resourceGroup, string providerName, string service, string resourceName)
+        public async Task<IActionResult> ListDetectors(string subscriptionId, string resourceGroup, string providerName, string service, string resourceName)
         {
             /*
              * IMPORTANT : 
@@ -30,13 +28,28 @@ namespace SampleAPIServer.Controllers
              */
 
             string tempRegion = "blu";
+            string tempLocation = "East US";
+            string requestId = Guid.NewGuid().ToString();
 
             var currentRoute = Request.Path.Value + Request.QueryString.ToUriComponent();
-            return await this.diagnosticsClient.Execute(currentRoute, tempRegion);
+            var response = await this.diagnosticsClient.Execute(currentRoute, tempRegion, requestId);
+
+            object content = null;
+            if (response.IsSuccessStatusCode)
+            {
+                content = await csmHelper.CreateCollectionEnvelopedResponse(response, Request.Path.Value, tempLocation, $"{providerName}/{service}/detectors", csmHelper.GetNameFromJToken);
+            }
+            else
+            {
+                // You might want to wrap the error also in an envelope.
+                content = await response.Content.ReadAsStringAsync();
+            }
+
+            return StatusCode((int)response.StatusCode, content);
         }
 
         [HttpGet(UriElements.Detector)]
-        public async Task<HttpResponseMessage> GetDetector(string subscriptionId, string resourceGroup, string providerName, string service, string resourceName, string detectorId)
+        public async Task<IActionResult> GetDetector(string subscriptionId, string resourceGroup, string providerName, string service, string resourceName, string detectorId)
         {
             /*
              * IMPORTANT : 
@@ -44,9 +57,23 @@ namespace SampleAPIServer.Controllers
              */
 
             string tempRegion = "blu";
+            string tempLocation = "East US";
+            string requestId = Guid.NewGuid().ToString();
 
             var currentRoute = Request.Path.Value + Request.QueryString.ToUriComponent();
-            return await this.diagnosticsClient.Execute(currentRoute, tempRegion);
+            var response =  await this.diagnosticsClient.Execute(currentRoute, tempRegion, requestId);
+            object content = null;
+            if (response.IsSuccessStatusCode)
+            {
+                content = await csmHelper.CreateEnvelopedResponse(response, Request.Path.Value, tempLocation, $"{providerName}/{service}/detectors", detectorId);
+            }
+            else
+            {
+                // You might want to wrap the error also in an envelope.
+                content = await response.Content.ReadAsStringAsync();
+            }
+
+            return StatusCode((int)response.StatusCode, content);
         }
     }
 }
