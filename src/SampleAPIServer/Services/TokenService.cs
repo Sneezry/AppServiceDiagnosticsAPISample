@@ -19,7 +19,7 @@ namespace SampleAPIServer.Services
         public TokenService(IConfiguration configuration)
         {
             LoadConfigurations(configuration);
-            authContext = new AuthenticationContext(authority, true);
+            authContext = new AuthenticationContext(authority, true, TokenCache.DefaultShared);
         }
 
         public async Task<AuthenticationResult> GetAccessTokenAsync()

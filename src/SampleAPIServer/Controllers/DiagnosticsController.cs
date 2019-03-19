@@ -27,7 +27,7 @@ namespace SampleAPIServer.Controllers
              * Verify your resource and fetch the region where this resource is deployed
              */
 
-            string tempRegion = "blu";
+            string tempRegion = "test";
             string tempLocation = "East US";
             string requestId = Guid.NewGuid().ToString();
 
@@ -56,7 +56,7 @@ namespace SampleAPIServer.Controllers
              * Verify your resource and fetch the region where this resource is deployed
              */
 
-            string tempRegion = "blu";
+            string tempRegion = "test";
             string tempLocation = "East US";
             string requestId = Guid.NewGuid().ToString();
 

@@ -21,6 +21,9 @@ namespace SampleAPIServer.Helpers
             string apiEndpoint = string.Empty;
             switch (regionName.ToLower())
             {
+                case "test":
+                    apiEndpoint = ProdDiagnosticEnabledEndpoints.Canary;
+                    break;
                 case "ma1": // SouthIndia
                 case "sha": // China
                 case "bm1": // West India
@@ -71,5 +74,6 @@ namespace SampleAPIServer.Helpers
         internal const string EastUs = "gr-prod-blu";
         internal const string NorthEurope = "gr-prod-db3";
         internal const string SouthEastAsia = "gr-prod-sg1";
+        internal const string Canary = "shgupgr1";//"gr-prod-msftintdm3";
     }
 }
