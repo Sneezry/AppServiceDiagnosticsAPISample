@@ -74,6 +74,6 @@ namespace SampleAPIServer.Helpers
         internal const string EastUs = "gr-prod-blu";
         internal const string NorthEurope = "gr-prod-db3";
         internal const string SouthEastAsia = "gr-prod-sg1";
-        internal const string Canary = "shgupgr1";//"gr-prod-msftintdm3";
+        internal const string Canary = "gr-prod-msftintdm3";
     }
 }
