@@ -55,7 +55,6 @@ namespace SampleAPIServer.Helpers
                 return new ResponseMessageEnvelope<JToken>(id: id + "/" + name, name: name, type: type, location: location, properties: arrayMember);
             }).ToList();
 
-
             var collectionEnvelope = new ResponseMessageCollectionEnvelope<ResponseMessageEnvelope<JToken>>(childEnvelopes, null, id);
             return collectionEnvelope;
         }

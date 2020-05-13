@@ -13,7 +13,7 @@ namespace SampleAPIServer.Services
         private string authority;
         private string appId;
         private string appKey;
-        private string resource;
+        private string resourceId;
         private AuthenticationContext authContext;
 
         public TokenService(IConfiguration configuration)
@@ -28,14 +28,14 @@ namespace SampleAPIServer.Services
 
             try
             {
-                authResult = await authContext.AcquireTokenSilentAsync(resource, appId);
+                authResult = await authContext.AcquireTokenSilentAsync(resourceId, appId);
             }
             catch (AdalException adalException)
             {
                 if (adalException.ErrorCode == AdalError.FailedToAcquireTokenSilently
                     || adalException.ErrorCode == AdalError.InteractionRequired)
                 {
-                    authResult = await authContext.AcquireTokenAsync(resource, new ClientCredential(appId, appKey));
+                    authResult = await authContext.AcquireTokenAsync(resourceId, new ClientCredential(appId, appKey));
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace SampleAPIServer.Services
             authority = config["AADSettings:Authority"].ToString();
             appId = config["AADSettings:AppId"].ToString();
             appKey = config["AADSettings:AppKey"].ToString();
-            resource = config["AADSettings:Resource"].ToString();
+            resourceId = config["AADSettings:ResourceId"].ToString();
         }
     }
 }

@@ -27,12 +27,12 @@ namespace SampleAPIServer.Controllers
              * Verify your resource and fetch the region where this resource is deployed
              */
 
-            string tempRegion = "test";
+            // These are temp values. The real values would be fetched from your resource.
+            string tempRegion = "blu";
             string tempLocation = "East US";
-            string requestId = Guid.NewGuid().ToString();
 
             var currentRoute = Request.Path.Value + Request.QueryString.ToUriComponent();
-            var response = await this.diagnosticsClient.Execute(currentRoute, tempRegion, requestId);
+            var response = await this.diagnosticsClient.Execute(currentRoute, tempRegion, Request.Headers);
 
             object content = null;
             if (response.IsSuccessStatusCode)
@@ -61,7 +61,7 @@ namespace SampleAPIServer.Controllers
             string requestId = Guid.NewGuid().ToString();
 
             var currentRoute = Request.Path.Value + Request.QueryString.ToUriComponent();
-            var response =  await this.diagnosticsClient.Execute(currentRoute, tempRegion, requestId);
+            var response =  await this.diagnosticsClient.Execute(currentRoute, tempRegion, Request.Headers);
             object content = null;
             if (response.IsSuccessStatusCode)
             {

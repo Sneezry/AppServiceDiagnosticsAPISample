@@ -26,7 +26,6 @@ namespace SampleAPIServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-
             services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IAppServiceDiagnosticsClientService, AppServiceDiagnosticsClientService>();
         }
