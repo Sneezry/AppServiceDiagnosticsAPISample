@@ -8,6 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - [dotnet core sdk](https://dotnet.microsoft.com/download)
+- Client Cert that is trusted by App services team, (Read instructions on that in the internal wiki), OR
 - AD App with AppId in allowed list by App Services Team. [Learn How to Create an Azure AD App](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal)
 
 
@@ -20,9 +21,7 @@ dotnet build
 
 ## Running Project Locally
 
-1. Update the AADSettings in `src\SampleAPIServer\appsettings.json`
-    - Use your `App Id` and `App Key`
-    -  Update the `Resource` as `https://microsoft.onmicrosoft.com/{name from App services team}`
+1. Update the Settings in `src\SampleAPIServer\appsettings.json` as per internal wiki shared.
 
 2. Run the SampleAPIServer:
 
