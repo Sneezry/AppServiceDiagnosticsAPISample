@@ -39,15 +39,15 @@ The SampleAPIServer exposes two APIs. You can just the APIs using Postman or in 
 
 - #### List Detectors API:
     - Method : GET
-    - Url : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/Microsoft.<RPName>/<service>/<your service name>/detectors`
+    - Url : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/providers/Microsoft.<RPName>/<service>/<your service name>/detectors`
 
     Example:
 
-    - AKS : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/Microsoft.ContainerService/managedClusters/<your cluster name>/detectors`
-    - Logic App : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/Microsoft.Logic/workflows/<your cluster name>/detectors`
+    - AKS : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/providers/Microsoft.ContainerService/managedClusters/<your cluster name>/detectors`
+    - Logic App : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/providers/Microsoft.Logic/workflows/<your cluster name>/detectors`
 
 
 - #### Get Detector API:
     - Method : GET
-    - Url : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/Microsoft.<RPName>/<service>/<your service name>/detectors/<detectorId>`
+    - Url : `http://localhost:50616/subscriptions/<your subid>/resourceGroups/<your resource group>/providers/Microsoft.<RPName>/<service>/<your service name>/detectors/<detectorId>`
 
