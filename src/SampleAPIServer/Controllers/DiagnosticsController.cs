@@ -34,6 +34,8 @@ namespace SampleAPIServer.Controllers
             var currentRoute = Request.Path.Value + Request.QueryString.ToUriComponent();
             var response = await this.diagnosticsClient.Execute(currentRoute, tempRegion, Request.Headers);
 
+            response.EnsureSuccessStatusCode();
+
             object content = null;
             if (response.IsSuccessStatusCode)
             {
@@ -62,6 +64,7 @@ namespace SampleAPIServer.Controllers
 
             var currentRoute = Request.Path.Value + Request.QueryString.ToUriComponent();
             var response =  await this.diagnosticsClient.Execute(currentRoute, tempRegion, Request.Headers);
+            response.EnsureSuccessStatusCode();
             object content = null;
             if (response.IsSuccessStatusCode)
             {

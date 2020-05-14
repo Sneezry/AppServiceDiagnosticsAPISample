@@ -80,7 +80,7 @@ namespace SampleAPIServer.Services
                 return;
             }
 
-            X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
             store.Open(OpenFlags.ReadOnly);
             X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint.ToUpper(), true);
 
