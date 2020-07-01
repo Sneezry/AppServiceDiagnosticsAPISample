@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SampleAPIServer.Services
@@ -27,7 +28,7 @@ namespace SampleAPIServer.Services
             this.tokenService = tokenService;
             authenticationMode = config["DiagnosticServer:AuthenticationMode"].ToString();
             apiEndpoint = config["DiagnosticServer:ApiEndpoint"].ToString();
-            InitializeClientCertificate(config["ClientCertficateSettings:Thumbprint"].ToString());
+            InitializeClientCertificate(config["ClientCertficateSettings:Name"].ToString());
             
             HttpClientHandler handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback +=
@@ -73,24 +74,24 @@ namespace SampleAPIServer.Services
             }
         }
 
-        private void InitializeClientCertificate(string thumbprint)
+        private void InitializeClientCertificate(string certificateName)
         {
             if(!authenticationMode.Equals("ClientCertificate", StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
 
-            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
-            store.Open(OpenFlags.ReadOnly);
-            X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint.ToUpper(), true);
+            var certificateStringValue = Environment.GetEnvironmentVariable(certificateName);
 
-            if (certificates == null || certificates.Count == 0)
+            if (certificateStringValue == null)
             {
-                throw new InvalidOperationException(String.Format("Cannot find Client Certificate with thumbprint {0}", thumbprint));
+                return;
             }
 
-            clientCertificate = certificates[0];
-            store.Close();
+            var certBytes = Encoding.UTF8.GetBytes(certificateStringValue);
+            clientCertificate = new X509Certificate2(Convert.FromBase64String(certificateStringValue),
+                                (string)null,
+                                X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
         }
 
     }
